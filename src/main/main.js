@@ -100,11 +100,14 @@ function handleDeepLink(url) {
         // url format: codlyy://auth/callback?token=...
         const urlObj = new URL(url);
         const token = urlObj.searchParams.get('token');
+        const name = urlObj.searchParams.get('name');
+        const email = urlObj.searchParams.get('email');
+        const picture = urlObj.searchParams.get('picture');
 
         if (token) {
             console.log('Deep link received token');
             if (mainWindow && !mainWindow.isDestroyed()) {
-                mainWindow.webContents.send('auth-success', { token });
+                mainWindow.webContents.send('auth-success', { token, name, email, picture });
                 // Restore/Focus
                 if (mainWindow.isMinimized()) mainWindow.restore();
                 mainWindow.focus();

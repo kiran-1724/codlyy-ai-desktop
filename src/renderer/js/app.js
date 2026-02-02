@@ -17,6 +17,13 @@ const elements = {
     btnGetStarted: document.getElementById('btn-get-started'),
     btnLoginGoogle: document.getElementById('btn-login-google'),
 
+    // User Profile
+    userProfileCard: document.getElementById('user-profile-card'),
+    userName: document.getElementById('user-name'),
+    userEmail: document.getElementById('user-email'),
+    userAvatar: document.getElementById('user-avatar'),
+    btnLogout: document.getElementById('btn-logout'),
+
     // Update Toast
     updateToast: document.getElementById('update-toast'),
     btnLater: document.getElementById('btn-later'),
@@ -57,14 +64,15 @@ function init() {
 // ═══════════════════════════════════════════════════════════
 
 function setupAuth() {
-    // 1. Check Token
+    // 1. Check for Existing Session
     const authToken = localStorage.getItem('codlyy_auth_token');
 
     if (authToken) {
         console.log("Session found, loading Dashboard...");
+        const userProfile = JSON.parse(localStorage.getItem('codlyy_user_profile') || '{}');
+        updateProfileUI(userProfile);
         showMainView();
     } else {
-        // Check if we just logged out or reset
         console.log("No session, showing Welcome Screen...");
         showWelcomeView();
     }
@@ -74,14 +82,22 @@ function setupAuth() {
         console.log("Deep Link Auth Success:", data);
 
         if (data.token) {
-            // Save Token
+            // Save Session Data
             localStorage.setItem('codlyy_auth_token', data.token);
 
-            // Update UI if needed (User Profile, etc)
-            // Transition
+            const userProfile = {
+                name: data.name || "Codlyy User",
+                email: data.email || "developer@codlyy.ai",
+                picture: data.picture || `https://ui-avatars.com/api/?name=${data.name || 'User'}&background=random`
+            };
+
+            localStorage.setItem('codlyy_user_profile', JSON.stringify(userProfile));
+
+            // Update UI & Transition
+            updateProfileUI(userProfile);
             showMainView();
 
-            // Reset Button State
+            // Reset Login Button
             if (elements.btnLoginGoogle) {
                 elements.btnLoginGoogle.classList.remove('opacity-70', 'pointer-events-none', 'scale-95');
                 elements.btnLoginGoogle.querySelector('span').innerText = "Continue with Google";
@@ -90,13 +106,15 @@ function setupAuth() {
     });
 
     // 3. User Interactions
-    if (elements.btnGetStarted) {
-        elements.btnGetStarted.addEventListener('click', () => showLoginView());
-    }
 
-    if (elements.btnLoginGoogle) {
-        elements.btnLoginGoogle.addEventListener('click', handleGoogleLogin);
-    }
+    // Get Started
+    if (elements.btnGetStarted) elements.btnGetStarted.addEventListener('click', () => showLoginView());
+
+    // Login
+    if (elements.btnLoginGoogle) elements.btnLoginGoogle.addEventListener('click', handleGoogleLogin);
+
+    // Logout
+    if (elements.btnLogout) elements.btnLogout.addEventListener('click', handleLogout);
 }
 
 function handleGoogleLogin() {
@@ -107,16 +125,30 @@ function handleGoogleLogin() {
     const originalText = elements.btnLoginGoogle.querySelector('span').innerText;
     elements.btnLoginGoogle.querySelector('span').innerText = "Connecting...";
 
-    // Open External Browser for Login
-    // URL pointing to your Next.js auth page
+    // Open External Browser
     window.codlyy.openExternal('https://codlyy.vercel.app/auth/desktop-login');
 
-    // Note: Button stays in "Connecting..." state until deep link returns
-    // In a real app, you might want a timeout to reset it if user cancels
+    // Timeout Reset
     setTimeout(() => {
         elements.btnLoginGoogle.classList.remove('opacity-70', 'pointer-events-none', 'scale-95');
         elements.btnLoginGoogle.querySelector('span').innerText = originalText;
-    }, 30000); // 30s timeout reset
+    }, 45000);
+}
+
+function handleLogout() {
+    // Clear Session
+    localStorage.removeItem('codlyy_auth_token');
+    localStorage.removeItem('codlyy_user_profile');
+
+    // Transition
+    showWelcomeView();
+}
+
+function updateProfileUI(profile) {
+    if (!profile) return;
+    if (elements.userName) elements.userName.innerText = profile.name || "Codlyy User";
+    if (elements.userEmail) elements.userEmail.innerText = profile.email || "developer@codlyy.ai";
+    if (elements.userAvatar && profile.picture) elements.userAvatar.src = profile.picture;
 }
 
 // --- View Switchers ---
@@ -219,8 +251,7 @@ document.addEventListener('keydown', (e) => {
     }
     // Ctrl+L: Logout (Clear Token + Show Welcome)
     if (e.ctrlKey && e.key === 'l') {
-        localStorage.removeItem('codlyy_auth_token');
-        showWelcomeView();
+        handleLogout();
     }
 });
 
