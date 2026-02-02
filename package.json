@@ -1,6 +1,6 @@
 {
   "name": "codlyy-ai-desktop",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Codlyy AI Desktop Application",
   "main": "src/main/main.js",
   "build": {
