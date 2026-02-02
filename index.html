@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,148 +10,458 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #fafafa;
         }
-        .titlebar { -webkit-app-region: drag; }
-        .no-drag { -webkit-app-region: no-drag; }
+
+        .titlebar {
+            -webkit-app-region: drag;
+        }
+
+        .no-drag {
+            -webkit-app-region: no-drag;
+        }
 
         /* Subtle grain */
         .grain {
             background-image: url("https://grainy-gradients.vercel.app/noise.svg");
             opacity: 0.035;
         }
+
+        /* ─── Liquid Animation with Icon ─── */
+        .liquid-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            border-radius: 24px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e5e5e5 100%);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .icon-background {
+            position: absolute;
+            inset: 0;
+            background-image: url('assets/icon.png');
+            background-size: 70%;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.15;
+            z-index: 1;
+        }
+
+        .liquid-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 0%;
+            background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+
+        .liquid-wave {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            border-radius: 45%;
+            animation: wave-rotate 8s linear infinite;
+        }
+
+        .icon-foreground {
+            position: absolute;
+            inset: 0;
+            background-image: url('assets/icon.png');
+            background-size: 70%;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 3;
+            mix-blend-mode: overlay;
+            opacity: 0.4;
+        }
+
+        @keyframes wave-rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
 <body class="h-screen flex flex-col text-zinc-900 overflow-hidden select-none">
 
-<!-- ───────────────── Titlebar ───────────────── -->
-<header class="titlebar h-12 flex items-center justify-between px-6 bg-white border-b border-zinc-200">
-    <div class="flex items-center gap-3">
-        <div class="w-2.5 h-2.5 rounded-full bg-zinc-900"></div>
-        <span class="text-[10px] font-bold uppercase tracking-[0.35em] text-zinc-400">
-            Codlyy AI // Native
-        </span>
-    </div>
+    <!-- ───────────────── Titlebar ───────────────── -->
+    <header class="titlebar h-12 flex items-center justify-between px-6 bg-white border-b border-zinc-200">
+        <div class="flex items-center gap-3">
+            <div class="w-2.5 h-2.5 rounded-full bg-zinc-900"></div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.35em] text-zinc-400">
+                Codlyy AI // Native
+            </span>
+        </div>
 
-    <div class="no-drag text-[10px] font-semibold text-zinc-400">
-        STABLE • V1.0
-    </div>
-</header>
+        <div class="no-drag flex items-center gap-3">
+            <span class="text-[10px] font-semibold text-zinc-400">STABLE • V<span id="app-version">...</span></span>
+            <button id="btn-whats-new"
+                class="px-2 py-1 rounded-md bg-zinc-100 hover:bg-zinc-200 text-[9px] font-bold text-zinc-600 transition-colors uppercase tracking-wider">
+                What's New
+            </button>
+        </div>
+    </header>
 
-<!-- ───────────────── Main ───────────────── -->
-<main class="relative flex-1 bg-zinc-50">
+    <!-- ───────────────── Main ───────────────── -->
+    <main class="relative flex-1 bg-zinc-50">
 
-    <!-- Background -->
-    <div class="absolute inset-0 bg-gradient-to-br from-white via-zinc-50 to-zinc-100"></div>
-    <div class="absolute inset-0 grain pointer-events-none"></div>
+        <!-- Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-white via-zinc-50 to-zinc-100"></div>
+        <div class="absolute inset-0 grain pointer-events-none"></div>
 
-    <div class="relative z-10 max-w-6xl mx-auto px-6 py-8 h-full">
+        <div class="relative z-10 max-w-6xl mx-auto px-6 py-8 h-full">
 
-        <!-- Bento Grid -->
-        <div class="grid grid-cols-12 grid-rows-6 gap-4 h-full">
-
-            <!-- Hero -->
-            <div class="col-span-12 md:col-span-7 row-span-4 rounded-3xl bg-white border border-zinc-200 p-8 flex flex-col justify-between shadow-sm">
-
-                <div>
-                    <span class="text-xs font-semibold uppercase tracking-widest text-zinc-400">
-                        Neural Workspace
-                    </span>
-
-                    <h1 class="mt-4 text-4xl md:text-5xl font-black tracking-tight text-zinc-900">
-                        Initializing<br>
-                        <span class="text-zinc-500">Codlyy AI Core</span>
-                    </h1>
-
-                    <p class="mt-4 max-w-md text-sm leading-relaxed text-zinc-500">
-                        Secure environment booting. Synchronizing agents, models, and memory layers
-                        into a unified workspace.
-                    </p>
-                </div>
-
-                <div class="flex gap-4 no-drag">
-                    <button class="flex items-center gap-2 px-6 py-4 rounded-xl bg-zinc-900 text-white font-semibold text-sm hover:bg-zinc-800 transition-all active:scale-95 shadow-sm">
-                        Open Workspace
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14"/>
-                            <path d="m12 5 7 7-7 7"/>
-                        </svg>
-                    </button>
-
-                    <button class="px-6 py-4 rounded-xl border border-zinc-300 text-zinc-600 text-sm font-semibold hover:border-zinc-500 hover:text-zinc-900 transition">
-                        System Settings
-                    </button>
-                </div>
-            </div>
-
-            <!-- Status -->
-            <div class="col-span-12 md:col-span-5 row-span-2 rounded-3xl bg-white border border-zinc-200 p-6 shadow-sm">
-                <p class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">
-                    Core Status
-                </p>
-
-                <div class="space-y-3 text-sm">
-                    <div class="flex justify-between">
-                        <span class="text-zinc-500">State</span>
-                        <span class="flex items-center gap-2 text-green-600 font-semibold">
-                            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-                            Active
+            <!-- Bento Grid (Existing Content) -->
+            <div class="grid grid-cols-12 grid-rows-6 gap-4 h-full">
+                <!-- Hero -->
+                <div
+                    class="col-span-12 md:col-span-7 row-span-4 rounded-3xl bg-white border border-zinc-200 p-8 flex flex-col justify-between shadow-sm">
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-widest text-zinc-400">
+                            Neural Workspace
                         </span>
+                        <h1 class="mt-4 text-4xl md:text-5xl font-black tracking-tight text-zinc-900">
+                            Initializing<br>
+                            <span class="text-zinc-500">Codlyy AI Core</span>
+                        </h1>
+                        <p class="mt-4 max-w-md text-sm leading-relaxed text-zinc-500">
+                            Secure environment booting. Synchronizing agents, models, and memory layers
+                            into a unified workspace.
+                        </p>
                     </div>
-
-                    <div class="flex justify-between">
-                        <span class="text-zinc-500">Compute Load</span>
-                        <span class="font-semibold text-zinc-800">0.02%</span>
+                    <div class="flex gap-4 no-drag">
+                        <button
+                            class="flex items-center gap-2 px-6 py-4 rounded-xl bg-zinc-900 text-white font-semibold text-sm hover:bg-zinc-800 transition-all active:scale-95 shadow-sm">
+                            Open Workspace
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M5 12h14" />
+                                <path d="m12 5 7 7-7 7" />
+                            </svg>
+                        </button>
+                        <button
+                            class="px-6 py-4 rounded-xl border border-zinc-300 text-zinc-600 text-sm font-semibold hover:border-zinc-500 hover:text-zinc-900 transition">
+                            System Settings
+                        </button>
                     </div>
+                </div>
 
-                    <div class="flex justify-between">
-                        <span class="text-zinc-500">Bridge Latency</span>
-                        <span class="font-semibold text-zinc-800">14ms</span>
+                <!-- Status -->
+                <div
+                    class="col-span-12 md:col-span-5 row-span-2 rounded-3xl bg-white border border-zinc-200 p-6 shadow-sm">
+                    <p class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">Core Status</p>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-zinc-500">State</span>
+                            <span class="flex items-center gap-2 text-green-600 font-semibold"><span
+                                    class="w-2 h-2 bg-green-500 rounded-full"></span> Active</span>
+                        </div>
+                        <div class="flex justify-between"><span class="text-zinc-500">Compute Load</span><span
+                                class="font-semibold text-zinc-800">0.02%</span></div>
+                        <div class="flex justify-between"><span class="text-zinc-500">Bridge Latency</span><span
+                                class="font-semibold text-zinc-800">14ms</span></div>
+                    </div>
+                </div>
+
+                <!-- Small Widgets -->
+                <div
+                    class="col-span-6 md:col-span-3 row-span-2 rounded-3xl bg-white border border-zinc-200 p-6 shadow-sm">
+                    <p class="text-xs uppercase tracking-widest text-zinc-400 mb-3">Compute</p>
+                    <p class="text-3xl font-black text-zinc-900">98.6%</p>
+                    <p class="text-xs text-zinc-500 mt-1">Idle capacity</p>
+                </div>
+                <div
+                    class="col-span-6 md:col-span-3 row-span-2 rounded-3xl bg-white border border-zinc-200 p-6 shadow-sm">
+                    <p class="text-xs uppercase tracking-widest text-zinc-400 mb-3">Memory</p>
+                    <p class="text-3xl font-black text-zinc-900">12.4GB</p>
+                    <p class="text-xs text-zinc-500 mt-1">Available</p>
+                </div>
+                <div
+                    class="col-span-12 md:col-span-6 row-span-2 rounded-3xl bg-white border border-zinc-200 p-6 shadow-sm">
+                    <p class="text-xs uppercase tracking-widest text-zinc-400 mb-4">Active Models</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="px-3 py-1 rounded-full bg-zinc-100 text-xs font-semibold text-zinc-700">Vision</span>
+                        <span class="px-3 py-1 rounded-full bg-zinc-100 text-xs font-semibold text-zinc-700">Code</span>
+                        <span
+                            class="px-3 py-1 rounded-full bg-zinc-100 text-xs font-semibold text-zinc-700">Reasoning</span>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Compute -->
-            <div class="col-span-6 md:col-span-3 row-span-2 rounded-3xl bg-white border border-zinc-200 p-6 shadow-sm">
-                <p class="text-xs uppercase tracking-widest text-zinc-400 mb-3">Compute</p>
-                <p class="text-3xl font-black text-zinc-900">98.6%</p>
-                <p class="text-xs text-zinc-500 mt-1">Idle capacity</p>
-            </div>
+        <!-- Brand watermark -->
+        <div
+            class="absolute bottom-10 left-1/2 -translate-x-1/2 text-[140px] font-black tracking-tight text-zinc-200 italic pointer-events-none">
+            CODLYY
+        </div>
 
-            <!-- Memory -->
-            <div class="col-span-6 md:col-span-3 row-span-2 rounded-3xl bg-white border border-zinc-200 p-6 shadow-sm">
-                <p class="text-xs uppercase tracking-widest text-zinc-400 mb-3">Memory</p>
-                <p class="text-3xl font-black text-zinc-900">12.4GB</p>
-                <p class="text-xs text-zinc-500 mt-1">Available</p>
-            </div>
+    </main>
 
-            <!-- Models -->
-            <div class="col-span-12 md:col-span-6 row-span-2 rounded-3xl bg-white border border-zinc-200 p-6 shadow-sm">
-                <p class="text-xs uppercase tracking-widest text-zinc-400 mb-4">Active Models</p>
+    <!-- ───────────────── UPDATE UI COMPONENTS ───────────────── -->
 
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 rounded-full bg-zinc-100 text-xs font-semibold text-zinc-700">Vision</span>
-                    <span class="px-3 py-1 rounded-full bg-zinc-100 text-xs font-semibold text-zinc-700">Code</span>
-                    <span class="px-3 py-1 rounded-full bg-zinc-100 text-xs font-semibold text-zinc-700">Reasoning</span>
-                    <span class="px-3 py-1 rounded-full bg-zinc-100 text-xs font-semibold text-zinc-700">Speech</span>
+    <!-- 1. Update Toast (Cleaner Design) -->
+    <div id="update-toast" class="no-drag fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-20 opacity-0 transition-all duration-300 ease-out
+            bg-white border border-zinc-200 shadow-2xl rounded-2xl z-50 pointer-events-none overflow-hidden
+            data-[show=true]:translate-y-0 data-[show=true]:opacity-100 data-[show=true]:pointer-events-auto">
+
+        <div class="flex items-center gap-4 p-4 pr-5">
+            <!-- Icon -->
+            <div class="relative flex-shrink-0">
+                <div
+                    class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="text-white">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                </div>
+                <div
+                    class="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse">
                 </div>
             </div>
 
+            <!-- Content -->
+            <div class="flex-1 min-w-0">
+                <h4 class="text-sm font-bold text-zinc-900 mb-0.5">New Update Available</h4>
+                <p class="text-xs text-zinc-500">Version <span id="new-version-text"
+                        class="font-semibold text-zinc-700">...</span> is ready to install</p>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-2 flex-shrink-0">
+                <button id="btn-later"
+                    class="px-3 py-1.5 text-xs font-semibold text-zinc-600 hover:text-zinc-900 transition-colors rounded-lg hover:bg-zinc-100">
+                    Later
+                </button>
+                <button id="btn-start-download"
+                    class="px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 active:scale-95">
+                    Update Now
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- Brand watermark -->
-    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-[140px] font-black tracking-tight text-zinc-200 italic pointer-events-none">
-        CODLYY
+    <!-- 2. Fullscreen Downloading Overlay (Liquid Effect) -->
+    <div id="download-overlay"
+        class="no-drag fixed inset-0 z-[60] bg-gradient-to-br from-zinc-50 to-zinc-100 flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500 ease-out">
+
+        <!-- Liquid Logo Container -->
+        <div class="liquid-container mb-8">
+            <div class="icon-background"></div>
+            <div id="liquid-fill" class="liquid-fill">
+                <div class="liquid-wave"></div>
+            </div>
+            <div class="icon-foreground"></div>
+        </div>
+
+        <!-- Status Text -->
+        <h2 id="download-status-title" class="text-3xl font-black text-zinc-900 tracking-tight mb-2">Downloading
+            Update...</h2>
+        <div class="flex items-center gap-3">
+            <div class="w-48 h-2 bg-zinc-200 rounded-full overflow-hidden">
+                <div id="progress-bar"
+                    class="h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all duration-300"
+                    style="width: 0%"></div>
+            </div>
+            <p class="text-zinc-600 font-mono text-sm font-bold min-w-[3rem] text-right">
+                <span id="download-percent">0</span>%
+            </p>
+        </div>
+
+        <!-- Restart Button (Hidden initially) -->
+        <button id="btn-restart"
+            class="mt-8 px-8 py-3 rounded-xl bg-blue-600 text-white font-bold text-sm hidden hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 active:scale-95">
+            Restart & Install
+        </button>
     </div>
 
-</main>
+    <!-- 3. What's New Modal -->
+    <div id="whats-new-modal"
+        class="no-drag fixed inset-0 z-[70] flex items-center justify-center bg-black/30 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 ease-out">
+        <div id="modal-content"
+            class="bg-white w-[90%] max-w-md rounded-2xl shadow-2xl border border-zinc-200 p-6 transform scale-90 transition-all duration-300">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-black text-zinc-900 tracking-tight">What's New</h3>
+                <button id="btn-close-modal"
+                    class="p-1.5 rounded-full hover:bg-zinc-100 text-zinc-500 hover:text-zinc-900 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="space-y-3 max-h-[60vh] overflow-y-auto">
+                <div class="p-4 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-xs font-black text-blue-600 uppercase tracking-widest">New</span>
+                        <span class="text-[10px] font-mono text-blue-500">v1.0.2</span>
+                    </div>
+                    <p class="text-sm font-bold text-zinc-900 mb-1">Version Display & Release Notes</p>
+                    <p class="text-xs text-zinc-600 leading-relaxed">Dynamic version display in header with "What's New"
+                        modal showing release notes.</p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-zinc-50 border border-zinc-100">
+                    <p class="text-sm font-bold text-zinc-900 mb-1">Smart Auto-Updater</p>
+                    <p class="text-xs text-zinc-600 leading-relaxed">Beautiful liquid animation during updates with
+                        user-controlled download flow.</p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-zinc-50 border border-zinc-100">
+                    <p class="text-sm font-bold text-zinc-900 mb-1">Enhanced Stability</p>
+                    <p class="text-xs text-zinc-600 leading-relaxed">Bug fixes and stability improvements across the
+                        board.</p>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-zinc-200">
+                <p class="text-[10px] text-zinc-400 text-center">Running version <span id="modal-version"
+                        class="font-mono text-zinc-600">...</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ───────────────── SCRIPT ───────────────── -->
+    <script>
+        const updateToast = document.getElementById('update-toast');
+        const downloadOverlay = document.getElementById('download-overlay');
+        const btnLater = document.getElementById('btn-later');
+        const btnStartDownload = document.getElementById('btn-start-download');
+        const btnRestart = document.getElementById('btn-restart');
+
+        const newVersionText = document.getElementById('new-version-text');
+        const downloadPercent = document.getElementById('download-percent');
+        const downloadStatusTitle = document.getElementById('download-status-title');
+
+        // Modal Elements
+        const whatsNewModal = document.getElementById('whats-new-modal');
+        const btnWhatsNew = document.getElementById('btn-whats-new');
+        const btnCloseModal = document.getElementById('btn-close-modal');
+        const modalContent = document.getElementById('modal-content');
+
+        // Ensure API exists (safe check)
+        if (window.codlyy) {
+
+            // Load and display current version
+            window.codlyy.getAppVersion().then(version => {
+                document.getElementById('app-version').innerText = version;
+                document.getElementById('modal-version').innerText = version;
+            }).catch(err => {
+                console.error('Failed to get version:', err);
+            });
+
+            // 1. Update Available -> Show Toast
+            window.codlyy.onUpdateAvailable((info) => {
+                console.log("Update available:", info);
+                if (info && info.version) {
+                    newVersionText.innerText = info.version;
+                }
+                // Show toast
+                updateToast.dataset.show = "true";
+            });
+
+            // 2. User Clicks Download
+            btnStartDownload.addEventListener('click', () => {
+                // Hide toast
+                updateToast.dataset.show = "false";
+                // Show overlay
+                downloadOverlay.classList.remove('opacity-0', 'pointer-events-none');
+                // Trigger download in backend
+                window.codlyy.startDownload();
+            });
+
+            // User Clicks Later within toast
+            btnLater.addEventListener('click', () => {
+                updateToast.dataset.show = "false";
+            });
+
+            // 3. Download Progress -> Animate Liquid
+            window.codlyy.onUpdateProgress((progressObj) => {
+                const percent = Math.round(progressObj.percent);
+                downloadPercent.innerText = percent;
+                document.getElementById('liquid-fill').style.height = percent + '%';
+                document.getElementById('progress-bar').style.width = percent + '%';
+            });
+
+            // 4. Download Complete -> Show Restart Button
+            window.codlyy.onUpdateDownloaded(() => {
+                document.getElementById('liquid-fill').style.height = '100%';
+                document.getElementById('progress-bar').style.width = '100%';
+                downloadPercent.innerText = '100';
+                downloadStatusTitle.innerText = "Update Ready!";
+
+                // Show restart button
+                btnRestart.classList.remove('hidden');
+            });
+
+            // 5. Restart Action
+            btnRestart.addEventListener('click', () => {
+                window.codlyy.restartApp();
+            });
+
+        } else {
+            console.warn("Codlyy API not found (running in pure browser?)");
+        }
+
+        // What's New Modal Logic
+        btnWhatsNew.addEventListener('click', () => {
+            whatsNewModal.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-90');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        });
+
+        btnCloseModal.addEventListener('click', () => {
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-90');
+            setTimeout(() => {
+                whatsNewModal.classList.add('opacity-0', 'pointer-events-none');
+            }, 200);
+        });
+
+        // Close modal on backdrop click
+        whatsNewModal.addEventListener('click', (e) => {
+            if (e.target === whatsNewModal) {
+                btnCloseModal.click();
+            }
+        });
+
+        // --- Dev/Demo Trigger (Ctrl+U) ---
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'u') {
+                console.log("Simulating update flow...");
+                newVersionText.innerText = "1.0.3";
+                updateToast.dataset.show = "true";
+            }
+        });
+    </script>
 
 </body>
+
 </html>
