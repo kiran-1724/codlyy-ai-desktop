@@ -1,0 +1,92 @@
+/* ═══════════════════════════════════════════════════════════
+   CODLYY AI - DESKTOP APPLICATION STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Base Styles ─── */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #fafafa;
+}
+
+.titlebar {
+    -webkit-app-region: drag;
+}
+
+.no-drag {
+    -webkit-app-region: no-drag;
+}
+
+/* ─── Grain Texture ─── */
+.grain {
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    opacity: 0.035;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LIQUID ANIMATION (App Icon Fill Effect)
+   ═══════════════════════════════════════════════════════════ */
+
+.liquid-container {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e5e5e5 100%);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.icon-background {
+    position: absolute;
+    inset: 0;
+    background-image: url('../assets/icon.png');
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+    z-index: 1;
+}
+
+.liquid-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0%;
+    background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
+}
+
+.liquid-wave {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    border-radius: 45%;
+    animation: wave-rotate 8s linear infinite;
+}
+
+.icon-foreground {
+    position: absolute;
+    inset: 0;
+    background-image: url('../assets/icon.png');
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 3;
+    mix-blend-mode: overlay;
+    opacity: 0.4;
+}
+
+@keyframes wave-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

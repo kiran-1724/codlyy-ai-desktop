@@ -9,101 +9,19 @@
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Font -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #fafafa;
-        }
-
-        .titlebar {
-            -webkit-app-region: drag;
-        }
-
-        .no-drag {
-            -webkit-app-region: no-drag;
-        }
-
-        /* Subtle grain */
-        .grain {
-            background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-            opacity: 0.035;
-        }
-
-        /* ─── Liquid Animation with Icon ─── */
-        .liquid-container {
-            position: relative;
-            width: 160px;
-            height: 160px;
-            border-radius: 24px;
-            overflow: hidden;
-            background: linear-gradient(135deg, #f5f5f5 0%, #e5e5e5 100%);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-        }
-
-        .icon-background {
-            position: absolute;
-            inset: 0;
-            background-image: url('assets/icon.png');
-            background-size: 70%;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0.15;
-            z-index: 1;
-        }
-
-        .liquid-fill {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 0%;
-            background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
-            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 2;
-        }
-
-        .liquid-wave {
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-            border-radius: 45%;
-            animation: wave-rotate 8s linear infinite;
-        }
-
-        .icon-foreground {
-            position: absolute;
-            inset: 0;
-            background-image: url('assets/icon.png');
-            background-size: 70%;
-            background-position: center;
-            background-repeat: no-repeat;
-            z-index: 3;
-            mix-blend-mode: overlay;
-            opacity: 0.4;
-        }
-
-        @keyframes wave-rotate {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body class="h-screen flex flex-col text-zinc-900 overflow-hidden select-none">
 
-    <!-- ───────────────── Titlebar ───────────────── -->
+    <!-- ═══════════════════════════════════════════════════════════
+         TITLEBAR
+         ═══════════════════════════════════════════════════════════ -->
     <header class="titlebar h-12 flex items-center justify-between px-6 bg-white border-b border-zinc-200">
         <div class="flex items-center gap-3">
             <div class="w-2.5 h-2.5 rounded-full bg-zinc-900"></div>
@@ -121,7 +39,9 @@
         </div>
     </header>
 
-    <!-- ───────────────── Main ───────────────── -->
+    <!-- ═══════════════════════════════════════════════════════════
+         MAIN CONTENT
+         ═══════════════════════════════════════════════════════════ -->
     <main class="relative flex-1 bg-zinc-50">
 
         <!-- Background -->
@@ -130,7 +50,7 @@
 
         <div class="relative z-10 max-w-6xl mx-auto px-6 py-8 h-full">
 
-            <!-- Bento Grid (Existing Content) -->
+            <!-- Bento Grid -->
             <div class="grid grid-cols-12 grid-rows-6 gap-4 h-full">
                 <!-- Hero -->
                 <div
@@ -218,15 +138,14 @@
 
     </main>
 
-    <!-- ───────────────── UPDATE UI COMPONENTS ───────────────── -->
-
-    <!-- 1. Update Toast (Cleaner Design) -->
+    <!-- ═══════════════════════════════════════════════════════════
+         UPDATE TOAST
+         ═══════════════════════════════════════════════════════════ -->
     <div id="update-toast" class="no-drag fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-20 opacity-0 transition-all duration-300 ease-out
             bg-white border border-zinc-200 shadow-2xl rounded-2xl z-50 pointer-events-none overflow-hidden
             data-[show=true]:translate-y-0 data-[show=true]:opacity-100 data-[show=true]:pointer-events-auto">
 
         <div class="flex items-center gap-4 p-4 pr-5">
-            <!-- Icon -->
             <div class="relative flex-shrink-0">
                 <div
                     class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg">
@@ -243,14 +162,12 @@
                 </div>
             </div>
 
-            <!-- Content -->
             <div class="flex-1 min-w-0">
                 <h4 class="text-sm font-bold text-zinc-900 mb-0.5">New Update Available</h4>
                 <p class="text-xs text-zinc-500">Version <span id="new-version-text"
                         class="font-semibold text-zinc-700">...</span> is ready to install</p>
             </div>
 
-            <!-- Actions -->
             <div class="flex items-center gap-2 flex-shrink-0">
                 <button id="btn-later"
                     class="px-3 py-1.5 text-xs font-semibold text-zinc-600 hover:text-zinc-900 transition-colors rounded-lg hover:bg-zinc-100">
@@ -264,7 +181,9 @@
         </div>
     </div>
 
-    <!-- 2. Fullscreen Downloading Overlay (Liquid Effect) -->
+    <!-- ═══════════════════════════════════════════════════════════
+         DOWNLOAD OVERLAY
+         ═══════════════════════════════════════════════════════════ -->
     <div id="download-overlay"
         class="no-drag fixed inset-0 z-[60] bg-gradient-to-br from-zinc-50 to-zinc-100 flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500 ease-out">
 
@@ -291,14 +210,16 @@
             </p>
         </div>
 
-        <!-- Restart Button (Hidden initially) -->
+        <!-- Restart Button -->
         <button id="btn-restart"
             class="mt-8 px-8 py-3 rounded-xl bg-blue-600 text-white font-bold text-sm hidden hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 active:scale-95">
             Restart & Install
         </button>
     </div>
 
-    <!-- 3. What's New Modal -->
+    <!-- ═══════════════════════════════════════════════════════════
+         WHAT'S NEW MODAL
+         ═══════════════════════════════════════════════════════════ -->
     <div id="whats-new-modal"
         class="no-drag fixed inset-0 z-[70] flex items-center justify-center bg-black/30 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 ease-out">
         <div id="modal-content"
@@ -319,23 +240,23 @@
                 <div class="p-4 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100">
                     <div class="flex items-center gap-2 mb-2">
                         <span class="text-xs font-black text-blue-600 uppercase tracking-widest">New</span>
-                        <span class="text-[10px] font-mono text-blue-500">v1.0.2</span>
+                        <span class="text-[10px] font-mono text-blue-500">v1.0.3</span>
                     </div>
-                    <p class="text-sm font-bold text-zinc-900 mb-1">Version Display & Release Notes</p>
-                    <p class="text-xs text-zinc-600 leading-relaxed">Dynamic version display in header with "What's New"
-                        modal showing release notes.</p>
+                    <p class="text-sm font-bold text-zinc-900 mb-1">Professional Code Structure</p>
+                    <p class="text-xs text-zinc-600 leading-relaxed">Modular architecture with separated concerns and
+                        system tray support.</p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-zinc-50 border border-zinc-100">
+                    <p class="text-sm font-bold text-zinc-900 mb-1">System Tray Integration</p>
+                    <p class="text-xs text-zinc-600 leading-relaxed">Minimize to tray, quick access menu, and background
+                        operation.</p>
                 </div>
 
                 <div class="p-4 rounded-xl bg-zinc-50 border border-zinc-100">
                     <p class="text-sm font-bold text-zinc-900 mb-1">Smart Auto-Updater</p>
-                    <p class="text-xs text-zinc-600 leading-relaxed">Beautiful liquid animation during updates with
-                        user-controlled download flow.</p>
-                </div>
-
-                <div class="p-4 rounded-xl bg-zinc-50 border border-zinc-100">
-                    <p class="text-sm font-bold text-zinc-900 mb-1">Enhanced Stability</p>
-                    <p class="text-xs text-zinc-600 leading-relaxed">Bug fixes and stability improvements across the
-                        board.</p>
+                    <p class="text-xs text-zinc-600 leading-relaxed">Beautiful liquid animation with user-controlled
+                        download flow.</p>
                 </div>
             </div>
 
@@ -346,121 +267,11 @@
         </div>
     </div>
 
-    <!-- ───────────────── SCRIPT ───────────────── -->
-    <script>
-        const updateToast = document.getElementById('update-toast');
-        const downloadOverlay = document.getElementById('download-overlay');
-        const btnLater = document.getElementById('btn-later');
-        const btnStartDownload = document.getElementById('btn-start-download');
-        const btnRestart = document.getElementById('btn-restart');
-
-        const newVersionText = document.getElementById('new-version-text');
-        const downloadPercent = document.getElementById('download-percent');
-        const downloadStatusTitle = document.getElementById('download-status-title');
-
-        // Modal Elements
-        const whatsNewModal = document.getElementById('whats-new-modal');
-        const btnWhatsNew = document.getElementById('btn-whats-new');
-        const btnCloseModal = document.getElementById('btn-close-modal');
-        const modalContent = document.getElementById('modal-content');
-
-        // Ensure API exists (safe check)
-        if (window.codlyy) {
-
-            // Load and display current version
-            window.codlyy.getAppVersion().then(version => {
-                document.getElementById('app-version').innerText = version;
-                document.getElementById('modal-version').innerText = version;
-            }).catch(err => {
-                console.error('Failed to get version:', err);
-            });
-
-            // 1. Update Available -> Show Toast
-            window.codlyy.onUpdateAvailable((info) => {
-                console.log("Update available:", info);
-                if (info && info.version) {
-                    newVersionText.innerText = info.version;
-                }
-                // Show toast
-                updateToast.dataset.show = "true";
-            });
-
-            // 2. User Clicks Download
-            btnStartDownload.addEventListener('click', () => {
-                // Hide toast
-                updateToast.dataset.show = "false";
-                // Show overlay
-                downloadOverlay.classList.remove('opacity-0', 'pointer-events-none');
-                // Trigger download in backend
-                window.codlyy.startDownload();
-            });
-
-            // User Clicks Later within toast
-            btnLater.addEventListener('click', () => {
-                updateToast.dataset.show = "false";
-            });
-
-            // 3. Download Progress -> Animate Liquid
-            window.codlyy.onUpdateProgress((progressObj) => {
-                const percent = Math.round(progressObj.percent);
-                downloadPercent.innerText = percent;
-                document.getElementById('liquid-fill').style.height = percent + '%';
-                document.getElementById('progress-bar').style.width = percent + '%';
-            });
-
-            // 4. Download Complete -> Show Restart Button
-            window.codlyy.onUpdateDownloaded(() => {
-                document.getElementById('liquid-fill').style.height = '100%';
-                document.getElementById('progress-bar').style.width = '100%';
-                downloadPercent.innerText = '100';
-                downloadStatusTitle.innerText = "Update Ready!";
-
-                // Show restart button
-                btnRestart.classList.remove('hidden');
-            });
-
-            // 5. Restart Action
-            btnRestart.addEventListener('click', () => {
-                window.codlyy.restartApp();
-            });
-
-        } else {
-            console.warn("Codlyy API not found (running in pure browser?)");
-        }
-
-        // What's New Modal Logic
-        btnWhatsNew.addEventListener('click', () => {
-            whatsNewModal.classList.remove('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                modalContent.classList.remove('scale-90');
-                modalContent.classList.add('scale-100');
-            }, 10);
-        });
-
-        btnCloseModal.addEventListener('click', () => {
-            modalContent.classList.remove('scale-100');
-            modalContent.classList.add('scale-90');
-            setTimeout(() => {
-                whatsNewModal.classList.add('opacity-0', 'pointer-events-none');
-            }, 200);
-        });
-
-        // Close modal on backdrop click
-        whatsNewModal.addEventListener('click', (e) => {
-            if (e.target === whatsNewModal) {
-                btnCloseModal.click();
-            }
-        });
-
-        // --- Dev/Demo Trigger (Ctrl+U) ---
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.key === 'u') {
-                console.log("Simulating update flow...");
-                newVersionText.innerText = "1.0.3";
-                updateToast.dataset.show = "true";
-            }
-        });
-    </script>
+    <!-- ═══════════════════════════════════════════════════════════
+         SCRIPTS
+         ═══════════════════════════════════════════════════════════ -->
+    <script src="js/app.js"></script>
+    <script src="js/modal.js"></script>
 
 </body>
 

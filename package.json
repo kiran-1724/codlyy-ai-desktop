@@ -2,15 +2,19 @@
   "name": "codlyy-ai-desktop",
   "version": "1.0.3",
   "description": "Codlyy AI Desktop Application",
-  "main": "main.js",
+  "main": "src/main/main.js",
   "build": {
     "appId": "com.codlyy.desktop",
     "productName": "Codlyy AI",
     "publish": [
       "github"
     ],
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
     "win": {
-      "icon": "assets/icon.ico",
+      "icon": "src/assets/icon.ico",
       "forceCodeSigning": false
     }
   },
