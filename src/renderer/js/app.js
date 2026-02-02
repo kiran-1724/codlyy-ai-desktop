@@ -61,52 +61,62 @@ function setupAuth() {
     const authToken = localStorage.getItem('codlyy_auth_token');
 
     if (authToken) {
-        // If logged in, go straight to Dashboard
         console.log("Session found, loading Dashboard...");
         showMainView();
     } else {
-        // If NOT logged in, show Welcome Screen
+        // Check if we just logged out or reset
         console.log("No session, showing Welcome Screen...");
         showWelcomeView();
     }
 
-    // 2. Event Listeners
+    // 2. Listen for Deep Link Login Success
+    window.codlyy.onAuthSuccess((data) => {
+        console.log("Deep Link Auth Success:", data);
 
-    // "Get Started" -> Show Login
+        if (data.token) {
+            // Save Token
+            localStorage.setItem('codlyy_auth_token', data.token);
+
+            // Update UI if needed (User Profile, etc)
+            // Transition
+            showMainView();
+
+            // Reset Button State
+            if (elements.btnLoginGoogle) {
+                elements.btnLoginGoogle.classList.remove('opacity-70', 'pointer-events-none', 'scale-95');
+                elements.btnLoginGoogle.querySelector('span').innerText = "Continue with Google";
+            }
+        }
+    });
+
+    // 3. User Interactions
     if (elements.btnGetStarted) {
-        elements.btnGetStarted.addEventListener('click', () => {
-            showLoginView();
-        });
+        elements.btnGetStarted.addEventListener('click', () => showLoginView());
     }
 
-    // "Continue with Google" -> Simulate Login
     if (elements.btnLoginGoogle) {
         elements.btnLoginGoogle.addEventListener('click', handleGoogleLogin);
     }
 }
 
 function handleGoogleLogin() {
-    console.log("Initiating Google Login Flow...");
+    console.log("Opening Google Login Page...");
 
     // UI Feedback
     elements.btnLoginGoogle.classList.add('opacity-70', 'pointer-events-none', 'scale-95');
     const originalText = elements.btnLoginGoogle.querySelector('span').innerText;
     elements.btnLoginGoogle.querySelector('span').innerText = "Connecting...";
 
+    // Open External Browser for Login
+    // URL pointing to your Next.js auth page
+    window.codlyy.openExternal('https://codlyy.vercel.app/auth/desktop-login');
+
+    // Note: Button stays in "Connecting..." state until deep link returns
+    // In a real app, you might want a timeout to reset it if user cancels
     setTimeout(() => {
-        // Mock Successful Login
-        const mockToken = "sess_" + Math.random().toString(36).substring(7);
-        localStorage.setItem('codlyy_auth_token', mockToken);
-
-        console.log("Login Successful. Token stored.");
-
-        // Transition to Main View
-        showMainView();
-
-        // Reset button state (in case user logs out later)
         elements.btnLoginGoogle.classList.remove('opacity-70', 'pointer-events-none', 'scale-95');
         elements.btnLoginGoogle.querySelector('span').innerText = originalText;
-    }, 1500);
+    }, 30000); // 30s timeout reset
 }
 
 // --- View Switchers ---

@@ -16,6 +16,10 @@ contextBridge.exposeInMainWorld('codlyy', {
     onUpdateProgress: (callback) => ipcRenderer.on('update-progress', (event, value) => callback(value)),
     onUpdateDownloaded: (callback) => ipcRenderer.on('update-downloaded', (event, value) => callback(value)),
 
+    // Auth API
+    onAuthSuccess: (callback) => ipcRenderer.on('auth-success', (event, value) => callback(value)),
+    openExternal: (url) => ipcRenderer.send('open-external', url),
+
     startDownload: () => ipcRenderer.send('start-download'),
     restartApp: () => ipcRenderer.send('restart-app')
 });

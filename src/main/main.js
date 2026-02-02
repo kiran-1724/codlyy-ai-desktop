@@ -1,17 +1,67 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, shell } = require('electron');
 const path = require('path');
 const { setupTray } = require('./tray');
 const { initAutoUpdater } = require('./updater');
 const { setupIPC } = require('./ipc');
 
-// Optional: Load .env for development
-try {
-    require('dotenv').config();
-} catch (e) {
-    // dotenv not installed or not needed
-}
+// Optional: Load .env
+try { require('dotenv').config(); } catch (e) { }
 
 let mainWindow;
+
+// 1. Single Instance Lock (Crucial for Deep Linking)
+if (process.defaultApp) {
+    if (process.argv.length >= 2) {
+        app.setAsDefaultProtocolClient('codlyy', process.execPath, [path.resolve(process.argv[1])]);
+    }
+} else {
+    app.setAsDefaultProtocolClient('codlyy');
+}
+
+const gotTheLock = app.requestSingleInstanceLock();
+
+if (!gotTheLock) {
+    app.quit();
+} else {
+    // Handle Second Instance (Windows/Linux Deep Link)
+    app.on('second-instance', (event, commandLine) => {
+        // Focus existing window
+        if (mainWindow) {
+            if (mainWindow.isMinimized()) mainWindow.restore();
+            mainWindow.focus();
+        }
+
+        // Find deep link
+        const url = commandLine.find(arg => arg.startsWith('codlyy://'));
+        if (url) handleDeepLink(url);
+    });
+
+    // App Ready
+    app.whenReady().then(() => {
+        createWindow();
+        setupIPC();
+
+        // Check for deep link on cold start (Windows)
+        if (process.platform === 'win32') {
+            const url = process.argv.find(arg => arg.startsWith('codlyy://'));
+            if (url) handleDeepLink(url);
+        }
+
+        app.on('activate', () => {
+            if (BrowserWindow.getAllWindows().length === 0) createWindow();
+        });
+    });
+}
+
+// Handle Deep Link (macOS)
+app.on('open-url', (event, url) => {
+    event.preventDefault();
+    if (mainWindow) {
+        handleDeepLink(url);
+    } else {
+        // Store if window not ready yet (handled via variable if needed, or wait for window)
+    }
+});
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -29,33 +79,44 @@ function createWindow() {
 
     mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
 
-    // Setup system tray
-    setupTray(mainWindow);
+    // Open links in external browser
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+        if (url.startsWith('http:') || url.startsWith('https:')) {
+            shell.openExternal(url);
+            return { action: 'deny' };
+        }
+        return { action: 'allow' };
+    });
 
-    // Initialize auto-updater
+    setupTray(mainWindow);
     initAutoUpdater(mainWindow);
 
     return mainWindow;
 }
 
-app.whenReady().then(() => {
-    createWindow();
+// Deep Link Handler
+function handleDeepLink(url) {
+    try {
+        // url format: codlyy://auth/callback?token=...
+        const urlObj = new URL(url);
+        const token = urlObj.searchParams.get('token');
 
-    // Setup IPC handlers
-    setupIPC();
-
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) {
-            createWindow();
+        if (token) {
+            console.log('Deep link received token');
+            if (mainWindow && !mainWindow.isDestroyed()) {
+                mainWindow.webContents.send('auth-success', { token });
+                // Restore/Focus
+                if (mainWindow.isMinimized()) mainWindow.restore();
+                mainWindow.focus();
+            }
         }
-    });
-});
+    } catch (e) {
+        console.error('Deep link parse error:', e);
+    }
+}
 
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
+    if (process.platform !== 'darwin') app.quit();
 });
 
-// Export for other modules
 module.exports = { getMainWindow: () => mainWindow };

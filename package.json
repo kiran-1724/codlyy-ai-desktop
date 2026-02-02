@@ -1,11 +1,19 @@
 {
   "name": "codlyy-ai-desktop",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Codlyy AI Desktop Application",
   "main": "src/main/main.js",
   "build": {
     "appId": "com.codlyy.desktop",
     "productName": "Codlyy AI",
+    "protocols": [
+      {
+        "name": "Codlyy AI Protocol",
+        "schemes": [
+          "codlyy"
+        ]
+      }
+    ],
     "publish": [
       "github"
     ],

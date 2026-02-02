@@ -17,6 +17,11 @@ function setupIPC() {
         downloadUpdate();
     });
 
+    ipcMain.on('open-external', (event, url) => {
+        require('electron').shell.openExternal(url);
+    });
+
+
     ipcMain.on('restart-app', () => {
         quitAndInstall();
     });
