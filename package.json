@@ -1,11 +1,14 @@
 {
   "name": "codlyy-ai-desktop",
   "version": "1.0.0",
-  "description": "",
+  "description": "Codlyy AI Desktop Application",
   "main": "main.js",
   "build": {
     "appId": "com.codlyy.desktop",
     "productName": "Codlyy AI",
+    "publish": [
+      "github"
+    ],
     "win": {
       "icon": "assets/icon.ico"
     }
@@ -16,10 +19,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Codlyy Team",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "electron": "^40.1.0"
+    "electron": "^40.1.0",
+    "electron-builder": "^26.7.0"
   }
 }
