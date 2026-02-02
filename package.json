@@ -10,7 +10,8 @@
       "github"
     ],
     "win": {
-      "icon": "assets/icon.ico"
+      "icon": "assets/icon.ico",
+      "forceCodeSigning": false
     }
   },
   "scripts": {
