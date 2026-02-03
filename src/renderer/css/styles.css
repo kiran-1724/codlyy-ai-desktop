@@ -95,6 +95,21 @@ body {
    SCROLLBARS & UTILITIES
    ═══════════════════════════════════════════════════════════ */
 
+@layer utilities {
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .debug-wireframe * {
+        outline: 1px solid rgba(255, 0, 0, 0.15) !important;
+    }
+}
+
 /* Custom Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
@@ -116,19 +131,17 @@ body {
     /* zinc-300 */
 }
 
-/* Code Editor Utilities */
-.tab-4 {
-    tab-size: 4;
+/* Monaco Editor Container */
+#monaco-editor-container {
+    width: 100%;
+    height: 100%;
 }
 
-#file-content {
-    font-family: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, 'Courier New', monospace;
-    font-size: 13px;
-    line-height: 1.6;
+/* Monaco Editor Custom Styling */
+.monaco-editor .margin {
+    background-color: #fafafa !important;
 }
 
-#line-numbers div {
-    font-family: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, 'Courier New', monospace;
-    font-size: 13px;
-    line-height: 1.6;
+.monaco-editor .line-numbers {
+    color: #a1a1aa !important;
 }

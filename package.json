@@ -1,6 +1,6 @@
 {
   "name": "codlyy-ai-desktop",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Codlyy AI Desktop Application",
   "main": "src/main/main.js",
   "build": {
@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "electron-log": "^5.4.3",
-    "electron-updater": "^6.7.3"
+    "electron-updater": "^6.7.3",
+    "monaco-editor": "^0.55.1"
   }
 }

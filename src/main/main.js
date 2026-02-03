@@ -4,6 +4,7 @@ const { setupTray } = require('./tray');
 require('./quitHandler');
 const { initAutoUpdater } = require('./updater');
 const { setupIPC } = require('./ipc');
+const { setupGitHandlers } = require('./git');
 
 // Optional: Load .env
 try { require('dotenv').config(); } catch (e) { }
@@ -90,6 +91,8 @@ function createWindow() {
     });
 
     setupTray(mainWindow);
+    setupIPC(mainWindow);
+    setupGitHandlers();
     initAutoUpdater(mainWindow);
 
     return mainWindow;
