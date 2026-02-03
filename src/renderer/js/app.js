@@ -506,13 +506,25 @@ function initEditor() {
     if (window.require && window.require.config) {
         require.config({
             paths: {
-                'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs'
+                'vs': './vs'
             }
         });
 
         // Load Monaco
         require(['vs/editor/editor.main'], function () {
             if (editorInstance) return; // Already created
+
+            // Disable TypeScript validation to avoid red squiggles in viewer mode
+            if (monaco.languages.typescript) {
+                monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+                    noSemanticValidation: true,
+                    noSyntaxValidation: true
+                });
+                monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+                    noSemanticValidation: true,
+                    noSyntaxValidation: true
+                });
+            }
 
             editorInstance = monaco.editor.create(document.getElementById('monaco-editor-container'), {
                 value: '',
@@ -542,7 +554,10 @@ function initEditor() {
                     useShadows: false,
                     verticalScrollbarSize: 10,
                     horizontalScrollbarSize: 10
-                }
+                },
+                formatOnType: true,
+                formatOnPaste: true,
+                tabSize: 2 // React standard
             });
 
             console.log('Monaco Editor initialized successfully');
@@ -586,7 +601,27 @@ async function openFile(name, path) {
                 const newModel = monaco.editor.createModel(content, language);
                 editorInstance.setModel(newModel);
             }
-            editorInstance.updateOptions({ readOnly: true });
+
+            // Temporarily enable editing to allow formatting
+            editorInstance.updateOptions({ readOnly: false });
+
+            // Attempt to format the document to ensure "neat alignment"
+            // We use a small timeout to let the language service initialize
+            setTimeout(() => {
+                editorInstance.getAction('editor.action.formatDocument').run().then(() => {
+                    // Re-enable read-only after formatting (if viewer mode is desired)
+                    // editorInstance.updateOptions({ readOnly: true }); 
+                    // User didn't strictly say it must be read-only, but previous code had it.
+                    // To be safe and let them "align" or edit if needed for "rich" feel, 
+                    // keeping it editable might be better for an "AI Desktop". 
+                    // But if strictly a viewer:
+                    editorInstance.updateOptions({ readOnly: true });
+                }).catch(err => {
+                    // If format fails (no provider), just set read-only
+                    editorInstance.updateOptions({ readOnly: true });
+                });
+            }, 300);
+
             editorInstance.setScrollTop(0);
         } else {
             console.warn("Editor not initialized yet. Retrying...");

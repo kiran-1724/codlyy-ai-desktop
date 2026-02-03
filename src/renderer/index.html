@@ -17,12 +17,32 @@
     <!-- Custom Styles -->
     <link rel="stylesheet" href="css/styles.css">
 
-    <!-- Highlight.js (Syntax Highlighting - Light Theme) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <!-- Monaco Editor (Local Configuration) -->
+    <script>
+        // Configure paths to use local files
+        var require = { paths: { 'vs': './vs' } };
+    </script>
+    <script src="./vs/loader.js"></script>
+    <script>
+        // Configure Monaco Workers Locally
+        window.MonacoEnvironment = {
+            getWorkerUrl: function (workerId, label) {
+                // Use the local worker script
+                return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
+                    self.MonacoEnvironment = {
+                        baseUrl: '${window.location.origin}/src/renderer/'
+                    };
+                    importScripts('${window.location.origin}/src/renderer/vs/base/worker/workerMain.js');`
+                )}`;
+            }
+        };
 
-    <!-- Monaco Editor -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+        // Load the editor modules
+        require(['vs/editor/editor.main'], function () {
+            console.log('Monaco Environment loaded.');
+            // Dispatch event or just let app.js pool for window.monaco
+        });
+    </script>
 </head>
 
 <body class="h-screen flex flex-col text-zinc-900 overflow-hidden select-none">
@@ -450,10 +470,10 @@
                     </div>
 
                     <!-- Right: Wireframe Button + User Menu -->
-                    <div class="relative flex items-center gap-2">
+                    <div class="relative flex items-center gap-3">
                         <!-- Wireframe Button -->
                         <button id="btn-wireframe"
-                            class="px-3 py-1.5 rounded-lg border border-zinc-200 hover:border-zinc-300 bg-white hover:bg-zinc-50 text-xs font-semibold text-zinc-600 hover:text-zinc-900 transition-all flex items-center gap-1.5">
+                            class="h-9 px-3 rounded-xl border border-zinc-200 hover:border-zinc-300 bg-white hover:bg-zinc-50 text-xs font-semibold text-zinc-600 hover:text-zinc-900 transition-all flex items-center gap-2 shadow-sm">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
@@ -464,16 +484,23 @@
                             Wireframe
                         </button>
 
-                        <!-- User Menu Trigger -->
+                        <!-- User Menu Trigger (Updated Style) -->
                         <button id="btn-user-menu"
-                            class="flex items-center gap-2 p-1 pl-2 rounded-full hover:bg-zinc-50 border border-transparent hover:border-zinc-200 transition-all group">
-                            <div class="text-right hidden sm:block">
-                                <div id="header-user-name" class="text-[10px] font-bold text-zinc-700 leading-tight">
+                            class="h-9 pr-1 pl-3 rounded-xl border border-zinc-200 hover:border-zinc-300 bg-white hover:bg-zinc-50 transition-all flex items-center gap-3 shadow-sm group">
+
+                            <div class="text-right flex flex-col justify-center h-full">
+                                <div id="header-user-name"
+                                    class="text-[11px] font-bold text-zinc-700 leading-none mb-0.5">
                                     Codlyy User</div>
-                                <div class="text-[9px] text-zinc-400 font-mono">Online</div>
+                                <div
+                                    class="text-[9px] text-zinc-400 font-medium leading-none flex items-center justify-end gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                    Online
+                                </div>
                             </div>
+
                             <img id="workspace-user-avatar" src=""
-                                class="w-8 h-8 rounded-full bg-zinc-200 object-cover ring-2 ring-white group-hover:ring-blue-50 transition-all">
+                                class="w-7 h-7 rounded-lg bg-zinc-100 object-cover ring-1 ring-zinc-100 group-hover:ring-zinc-200 transition-all">
                         </button>
 
                         <!-- Dropdown Menu -->
