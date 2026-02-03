@@ -1,8 +1,12 @@
 {
   "name": "codlyy-ai-desktop",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Codlyy AI Desktop Application",
   "main": "src/main/main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kiran-1724/codlyy-ai-desktop.git"
+  },
   "build": {
     "appId": "com.codlyy.desktop",
     "productName": "Codlyy AI",
