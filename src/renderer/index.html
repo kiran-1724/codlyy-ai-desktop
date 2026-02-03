@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -14,6 +14,9 @@
         rel="stylesheet">
 
     <!-- Custom Styles -->
+    <!-- Codicons (VS Code Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codicon/0.0.35/codicon.min.css" />
+
     <!-- Custom Styles -->
     <link rel="stylesheet" href="css/styles.css">
 
@@ -47,9 +50,9 @@
 
 <body class="h-screen flex flex-col text-zinc-900 overflow-hidden select-none">
 
-    <!-- ═══════════════════════════════════════════════════════════
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
          TITLEBAR
-         ═══════════════════════════════════════════════════════════ -->
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
     <header id="app-titlebar"
         class="titlebar h-12 flex items-center justify-between px-6 bg-white border-b border-zinc-200 relative z-50">
         <div class="flex items-center gap-3">
@@ -60,7 +63,7 @@
         </div>
 
         <div class="no-drag flex items-center gap-3">
-            <span class="text-[10px] font-semibold text-zinc-400">STABLE • V<span id="app-version">...</span></span>
+            <span class="text-[10px] font-semibold text-zinc-400">STABLE â€¢ V<span id="app-version">...</span></span>
             <button id="btn-whats-new"
                 class="px-2 py-1 rounded-md bg-zinc-100 hover:bg-zinc-200 text-[9px] font-bold text-zinc-600 transition-colors uppercase tracking-wider">
                 What's New
@@ -68,9 +71,9 @@
         </div>
     </header>
 
-    <!-- ═══════════════════════════════════════════════════════════
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
          MAIN CONTAINER
-         ═══════════════════════════════════════════════════════════ -->
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
     <main class="relative flex-1 bg-zinc-50 h-full">
 
         <!-- Common Background -->
@@ -83,9 +86,9 @@
             CODLYY
         </div>
 
-        <!-- ═══════════════════════════════════════════════════════════
+        <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
              VIEW: WELCOME PAGE (Intro)
-             ═══════════════════════════════════════════════════════════ -->
+             â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
         <section id="welcome-view"
             class="relative z-40 h-full flex flex-col items-center justify-center p-6 text-center animate-in fade-in zoom-in-95 duration-700 hidden">
 
@@ -117,9 +120,9 @@
 
         </section>
 
-        <!-- ═══════════════════════════════════════════════════════════
+        <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
              VIEW: LOGIN PAGE
-             ═══════════════════════════════════════════════════════════ -->
+             â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
         <section id="login-view" class="relative z-30 h-full flex flex-col items-center justify-center p-6 hidden">
 
             <div
@@ -176,9 +179,9 @@
             </div>
         </section>
 
-        <!-- ═══════════════════════════════════════════════════════════
+        <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
              VIEW: DASHBOARD (Main App)
-             ═══════════════════════════════════════════════════════════ -->
+             â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
         <div id="main-view"
             class="relative z-20 h-full max-w-6xl mx-auto px-6 py-8 hidden animate-in fade-in zoom-in-95 duration-500">
 
@@ -290,9 +293,9 @@
                 </div>
             </div>
         </div>
-        <!-- ═══════════════════════════════════════════════════════════
+        <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
              VIEW: WORKSPACE SELECTION (Open/Clone/Recents)
-             ═══════════════════════════════════════════════════════════ -->
+             â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
         <div id="workspace-selection-view"
             class="relative z-20 h-full max-w-6xl mx-auto px-6 py-8 hidden animate-in fade-in zoom-in-95 duration-500">
 
@@ -380,9 +383,9 @@
             </div>
         </div>
 
-        <!-- ═══════════════════════════════════════════════════════════
+        <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
              VIEW: WIREFRAME / PROJECT INFO
-             ═══════════════════════════════════════════════════════════ -->
+             â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
         <div id="wireframe-view"
             class="relative z-50 h-full flex flex-col items-center justify-center bg-zinc-50 hidden animate-in fade-in zoom-in-95 duration-300">
             <div class="max-w-2xl w-full p-8 text-center">
@@ -423,144 +426,116 @@
             </div>
         </div>
 
-        <!-- ═══════════════════════════════════════════════════════════
+        <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
              VIEW: WORKSPACE VIEWER (File Tree & Code)
-             ═══════════════════════════════════════════════════════════ -->
-        <div id="workspace-view" class="relative z-20 h-full flex hidden bg-white">
+             â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+        <div id="workspace-view" class="relative z-20 h-full flex hidden bg-white text-sm font-sans select-none">
 
-            <!-- Sidebar: File Tree -->
-            <aside class="w-56 bg-zinc-50 border-r border-zinc-200 flex flex-col">
-                <div class="h-10 flex items-center px-3 border-b border-zinc-200 bg-white">
-                    <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Explorer</span>
+            <!-- 1. ACTIVITY BAR (Far Left) -->
+            <div class="w-12 bg-[#2c2c2c] flex flex-col items-center py-2.5 z-30 text-[#858585]">
+                <div class="w-12 h-12 flex items-center justify-center cursor-pointer border-l-2 border-white text-white mb-1"
+                    title="Explorer">
+                    <i class="codicon codicon-files text-2xl"></i>
                 </div>
-                <div id="file-tree" class="flex-1 overflow-y-auto py-2 text-sm text-zinc-600 font-medium select-none">
-                    <!-- Tree items injected here -->
+                <div class="w-12 h-12 flex items-center justify-center cursor-pointer border-l-2 border-transparent hover:text-white transition-colors mb-1"
+                    title="Search">
+                    <i class="codicon codicon-search text-2xl"></i>
+                </div>
+                <div class="w-12 h-12 flex items-center justify-center cursor-pointer border-l-2 border-transparent hover:text-white transition-colors mb-1"
+                    title="Source Control">
+                    <i class="codicon codicon-source-control text-2xl"></i>
+                </div>
+                <div class="w-12 h-12 flex items-center justify-center cursor-pointer border-l-2 border-transparent hover:text-white transition-colors mb-1"
+                    title="Extensions">
+                    <i class="codicon codicon-extensions text-2xl"></i>
+                </div>
+
+                <div class="flex-1"></div>
+
+                <!-- User Account -->
+                <div class="relative group">
+                    <button id="btn-user-menu"
+                        class="w-12 h-12 flex items-center justify-center cursor-pointer border-l-2 border-transparent hover:text-white transition-colors">
+                        <i class="codicon codicon-account text-2xl"></i>
+                    </button>
+                    <!-- Dropdown Menu -->
+                    <div id="user-dropdown-menu"
+                        class="hidden absolute left-12 bottom-2 w-64 bg-[#252526] text-zinc-300 rounded-r-lg shadow-2xl border border-black/20 py-2 z-50 transform origin-bottom-left animate-in fade-in slide-in-from-left-2 transition-all">
+                        <div class="px-4 py-3 border-b border-white/5 bg-[#2d2d2d]">
+                            <p id="header-user-name" class="text-sm font-bold text-white">User</p>
+                            <p class="text-xs opacity-50">GitHub Login</p>
+                        </div>
+                        <button id="menu-check-updates"
+                            class="w-full text-left px-4 py-2 hover:bg-[#2a2d2e] hover:text-white flex items-center gap-3 transition-colors text-xs">
+                            <i class="codicon codicon-cloud-download"></i> Check Updates
+                        </button>
+                        <button id="menu-close-workspace"
+                            class="w-full text-left px-4 py-2 hover:bg-[#2a2d2e] hover:text-white flex items-center gap-3 transition-colors text-xs">
+                            <i class="codicon codicon-close"></i> Close Project
+                        </button>
+                        <div class="h-px bg-white/10 my-1"></div>
+                        <button id="menu-logout"
+                            class="w-full text-left px-4 py-2 hover:bg-red-500/10 hover:text-red-400 flex items-center gap-3 transition-colors text-xs">
+                            <i class="codicon codicon-sign-out"></i> Log Out
+                        </button>
+                        <button id="menu-exit-app"
+                            class="w-full text-left px-4 py-2 hover:bg-red-500/10 hover:text-red-400 flex items-center gap-3 transition-colors text-xs">
+                            <i class="codicon codicon-circle-filled text-[10px]"></i> Exit
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w-12 h-12 flex items-center justify-center cursor-pointer border-l-2 border-transparent hover:text-white transition-colors"
+                    title="Manage">
+                    <i class="codicon codicon-settings-gear text-2xl"></i>
+                </div>
+            </div>
+
+            <!-- 2. PRIMARY SIDEBAR (Explorer) -->
+            <aside class="w-64 bg-[#f3f3f3] border-r border-[#e5e5e5] flex flex-col group">
+                <div
+                    class="h-9 px-4 flex items-center justify-between text-[11px] font-medium text-[#6f6f6f] uppercase tracking-wide cursor-default select-none">
+                    <span>Explorer</span>
+                    <i class="codicon codicon-ellipsis opacity-0 group-hover:opacity-100 cursor-pointer"></i>
+                </div>
+
+                <div class="flex-1 overflow-y-auto custom-scrollbar">
+                    <div
+                        class="text-[11px] font-bold text-[#333333] flex items-center px-2 py-1 cursor-pointer bg-transparent hover:bg-zinc-200/50">
+                        <i class="codicon codicon-chevron-down text-zinc-500 mr-1"></i>
+                        <span class="uppercase">My Project</span>
+                    </div>
+                    <!-- File Tree Container -->
+                    <div id="file-tree"
+                        class="pl-1 text-[13px] text-[#555] font-normal font-[Segoe WPC,Segoe UI,sans-serif]">
+                        <!-- JS App will inject items here -->
+                    </div>
                 </div>
             </aside>
 
             <!-- Main: Code Editor Area -->
             <div class="flex-1 flex flex-col min-w-0 bg-white">
 
-                <!-- Tab / Breadcrumb Header -->
-                <div class="h-11 flex items-center justify-between px-4 border-b border-zinc-200 bg-white z-10">
-
-                    <!-- Left: Sidebar Toggle & File Info -->
-                    <div class="flex items-center gap-3">
-                        <button id="btn-toggle-sidebar"
-                            class="p-1.5 rounded-md text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 transition-colors"
-                            title="Toggle Sidebar (Ctrl+B)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-                                <line x1="9" x2="9" y1="3" y2="21" />
-                            </svg>
-                        </button>
-
-                        <div class="h-4 w-px bg-zinc-200 mx-1"></div>
-
-                        <div class="flex items-center gap-2 text-xs text-zinc-500 overflow-hidden">
-                            <span id="current-project-name"
-                                class="font-bold text-zinc-800 uppercase tracking-wider text-[10px] hidden md:block">NO
-                                FOLDER</span>
-                            <span class="text-zinc-300 hidden md:block">/</span>
-                            <span id="current-file-name" class="font-medium text-zinc-600 truncate max-w-[300px]">No
-                                file selected</span>
-                        </div>
+                <!-- Tab Header (VS Code Style) -->
+                <div class="h-9 flex bg-[#f3f3f3] border-b border-[#e5e5e5] select-none">
+                    <div class="flex items-center gap-2 px-3 bg-white border-r border-[#e5e5e5] min-w-[140px] max-w-[200px] h-full border-t-2 border-t-[#007acc] relative group cursor-pointer">
+                        <i class="codicon codicon-file-code text-[#E6A32E] text-xs"></i>
+                        <span id="current-file-name" class="text-[13px] text-[#333] truncate">No File</span>
+                        <i class="codicon codicon-close ml-auto text-[#666] opacity-0 group-hover:opacity-100 hover:bg-[#e8eaed] rounded p-0.5 cursor-pointer text-[10px]"></i>
                     </div>
-
-                    <!-- Right: Wireframe Button + User Menu -->
-                    <div class="relative flex items-center gap-3">
-                        <!-- Wireframe Button -->
-                        <button id="btn-wireframe"
-                            class="h-9 px-3 rounded-xl border border-zinc-200 hover:border-zinc-300 bg-white hover:bg-zinc-50 text-xs font-semibold text-zinc-600 hover:text-zinc-900 transition-all flex items-center gap-2 shadow-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                <line x1="3" y1="9" x2="21" y2="9"></line>
-                                <line x1="9" y1="21" x2="9" y2="9"></line>
-                            </svg>
-                            Wireframe
+                    <div class="flex-1 flex items-center justify-end px-2">
+                        <button id="btn-wireframe" class="flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-medium text-[#555] hover:bg-[#e8e8e8] rounded transition-colors">
+                            <i class="codicon codicon-layout-sidebar-right"></i>
+                            <span class="hidden md:inline">Wireframe</span>
                         </button>
-
-                        <!-- User Menu Trigger (Updated Style) -->
-                        <button id="btn-user-menu"
-                            class="h-9 pr-1 pl-3 rounded-xl border border-zinc-200 hover:border-zinc-300 bg-white hover:bg-zinc-50 transition-all flex items-center gap-3 shadow-sm group">
-
-                            <div class="text-right flex flex-col justify-center h-full">
-                                <div id="header-user-name"
-                                    class="text-[11px] font-bold text-zinc-700 leading-none mb-0.5">
-                                    Codlyy User</div>
-                                <div
-                                    class="text-[9px] text-zinc-400 font-medium leading-none flex items-center justify-end gap-1">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-                                    Online
-                                </div>
-                            </div>
-
-                            <img id="workspace-user-avatar" src=""
-                                class="w-7 h-7 rounded-lg bg-zinc-100 object-cover ring-1 ring-zinc-100 group-hover:ring-zinc-200 transition-all">
-                        </button>
-
-                        <!-- Dropdown Menu -->
-                        <div id="user-dropdown-menu"
-                            class="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl border border-zinc-200 py-1 hidden transform origin-top-right transition-all z-50">
-                            <div class="px-4 py-3 border-b border-zinc-100">
-                                <p class="text-xs font-bold text-zinc-900">Workspace Actions</p>
-                            </div>
-
-                            <!-- Close Workspace (Back to Selection) -->
-                            <button id="menu-close-workspace"
-                                class="w-full text-left px-4 py-2.5 text-xs font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 flex items-center gap-2.5 transition-colors">
-                                <svg class="w-4 h-4 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-                                    <line x1="9" x2="9" y1="3" y2="21" />
-                                </svg>
-                                Close & Switch Project
-                            </button>
-
-                            <!-- Check Updates -->
-                            <button id="menu-check-updates"
-                                class="w-full text-left px-4 py-2.5 text-xs font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 flex items-center gap-2.5 transition-colors">
-                                <svg class="w-4 h-4 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
-                                    <path d="M21 3v5h-5" />
-                                </svg>
-                                Check for Updates
-                            </button>
-
-                            <div class="h-px bg-zinc-100 my-1"></div>
-
-                            <!-- Logout -->
-                            <button id="menu-logout"
-                                class="w-full text-left px-4 py-2.5 text-xs font-medium text-zinc-600 hover:bg-red-50 hover:text-red-500 flex items-center gap-2.5 transition-colors">
-                                <svg class="w-4 h-4 text-zinc-400 group-hover:text-red-500" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                                    <polyline points="16 17 21 12 16 7" />
-                                    <line x1="21" y1="12" x2="9" y2="12" />
-                                </svg>
-                                Logout
-                            </button>
-
-                            <!-- Exit App -->
-                            <button id="menu-exit-app"
-                                class="w-full text-left px-4 py-2.5 text-xs font-bold text-red-600 hover:bg-red-50 flex items-center gap-2.5 transition-colors">
-                                <svg class="w-4 h-4 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
-                                    <line x1="12" y1="2" x2="12" y2="12"></line>
-                                </svg>
-                                Exit Application
-                            </button>
-                        </div>
                     </div>
                 </div>
-
+                <!-- Breadcrumbs -->
+                <div class="h-6 flex items-center px-4 bg-white border-b border-zinc-100 text-[11px] text-[#666] gap-1.5 shadow-sm z-10 select-none">
+                     <span>workspace</span>
+                     <i class="codicon codicon-chevron-right text-[10px] opacity-70"></i>
+                     <span class="text-[#333] font-medium" id="breadcrumb-file">...</span>
+                </div>
                 <!-- Code Content -->
                 <div class="flex-1 relative overflow-hidden">
                     <!-- Monaco Editor Container -->
@@ -577,14 +552,27 @@
                         <p class="text-sm font-medium">Select a file to view content</p>
                     </div>
                 </div>
+                <!-- Status Bar -->
+                <div class="h-6 bg-[#007acc] text-white flex items-center justify-between px-3 text-[11px] select-none z-20 font-sans">
+                     <div class="flex items-center gap-3">
+                         <div class="flex items-center gap-1 hover:bg-white/20 px-1 rounded cursor-pointer transition-colors"><i class="codicon codicon-source-control"></i> main*</div>
+                         <div class="flex items-center gap-1 hover:bg-white/20 px-1 rounded cursor-pointer transition-colors"><i class="codicon codicon-error text-red-200"></i> 0 <i class="codicon codicon-warning text-yellow-200"></i> 0</div>
+                     </div>
+                     <div class="flex items-center gap-4">
+                         <div class="hover:bg-white/20 px-1 rounded cursor-pointer transition-colors">Ln 1, Col 1</div>
+                         <div class="hover:bg-white/20 px-1 rounded cursor-pointer transition-colors">UTF-8</div>
+                         <div class="hover:bg-white/20 px-1 rounded cursor-pointer transition-colors">JavaScript</div>
+                         <div class="hover:bg-white/20 px-1 rounded cursor-pointer transition-colors"><i class="codicon codicon-bell"></i></div>
+                     </div>
+                </div>
             </div>
         </div>
 
     </main>
 
-    <!-- ═══════════════════════════════════════════════════════════
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
          UPDATE TOAST (Global)
-         ═══════════════════════════════════════════════════════════ -->
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
     <div id="update-toast" class="no-drag fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-20 opacity-0 transition-all duration-300 ease-out
             bg-white border border-zinc-200 shadow-2xl rounded-2xl z-50 pointer-events-none overflow-hidden
             data-[show=true]:translate-y-0 data-[show=true]:opacity-100 data-[show=true]:pointer-events-auto">
@@ -625,9 +613,9 @@
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
          DOWNLOAD OVERLAY
-         ═══════════════════════════════════════════════════════════ -->
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
     <div id="download-overlay"
         class="no-drag fixed inset-0 z-[60] bg-gradient-to-br from-zinc-50 to-zinc-100 flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500 ease-out">
 
@@ -661,9 +649,9 @@
         </button>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
          WHAT'S NEW MODAL
-         ═══════════════════════════════════════════════════════════ -->
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
     <div id="whats-new-modal"
         class="no-drag fixed inset-0 z-[70] flex items-center justify-center bg-black/30 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 ease-out">
         <div id="modal-content"
@@ -688,10 +676,10 @@
                     </div>
                     <p class="text-sm font-bold text-zinc-900 mb-1">Polished Workspace Experience</p>
                     <p class="text-xs text-zinc-600 leading-relaxed">
-                        • <b>Focus Mode:</b> Auto-hides titlebar for code immersion.<br>
-                        • <b>Sidebar Toggle:</b> Use Ctrl+B or the header button.<br>
-                        • <b>Action Menu:</b> Separate controls for switching projects, logging out, and exiting.<br>
-                        • <b>Project Name:</b> Clearer visibility of active folder.
+                        â€¢ <b>Focus Mode:</b> Auto-hides titlebar for code immersion.<br>
+                        â€¢ <b>Sidebar Toggle:</b> Use Ctrl+B or the header button.<br>
+                        â€¢ <b>Action Menu:</b> Separate controls for switching projects, logging out, and exiting.<br>
+                        â€¢ <b>Project Name:</b> Clearer visibility of active folder.
                     </p>
                 </div>
             </div>
@@ -703,9 +691,9 @@
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
          CLONE REPOSITORY MODAL
-         ═══════════════════════════════════════════════════════════ -->
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
     <div id="clone-modal"
         class="no-drag fixed inset-0 z-[70] flex items-start pt-32 justify-center bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-200">
 
@@ -761,9 +749,9 @@
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
          SCRIPTS
-         ═══════════════════════════════════════════════════════════ -->
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
     <script src="js/app.js"></script>
     <script src="js/modal.js"></script>
 
