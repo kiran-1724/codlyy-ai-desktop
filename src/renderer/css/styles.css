@@ -90,3 +90,45 @@ body {
         transform: rotate(360deg);
     }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLLBARS & UTILITIES
+   ═══════════════════════════════════════════════════════════ */
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #e4e4e7;
+    /* zinc-200 */
+    border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #d4d4d8;
+    /* zinc-300 */
+}
+
+/* Code Editor Utilities */
+.tab-4 {
+    tab-size: 4;
+}
+
+#file-content {
+    font-family: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+#line-numbers div {
+    font-family: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+}

@@ -36,6 +36,7 @@ function setupTray(mainWindow) {
         {
             label: 'Quit',
             click: () => {
+                app.isQuitting = true;
                 app.quit();
             }
         }

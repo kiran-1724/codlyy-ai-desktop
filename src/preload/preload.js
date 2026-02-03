@@ -21,5 +21,12 @@ contextBridge.exposeInMainWorld('codlyy', {
     openExternal: (url) => ipcRenderer.send('open-external', url),
 
     startDownload: () => ipcRenderer.send('start-download'),
-    restartApp: () => ipcRenderer.send('restart-app')
+    restartApp: () => ipcRenderer.send('restart-app'),
+    checkUpdates: () => ipcRenderer.send('check-updates-manual'),
+    exitApp: () => ipcRenderer.send('app-quit'),
+
+    // Workspace API
+    selectFolder: () => ipcRenderer.invoke('dialog:openFolder'),
+    readDir: (path) => ipcRenderer.invoke('fs:readDir', path),
+    readFile: (path) => ipcRenderer.invoke('fs:readFile', path)
 });

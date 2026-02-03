@@ -1,6 +1,7 @@
 const { app, BrowserWindow, shell } = require('electron');
 const path = require('path');
 const { setupTray } = require('./tray');
+require('./quitHandler');
 const { initAutoUpdater } = require('./updater');
 const { setupIPC } = require('./ipc');
 

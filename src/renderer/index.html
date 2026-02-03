@@ -14,7 +14,12 @@
         rel="stylesheet">
 
     <!-- Custom Styles -->
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Highlight.js (Syntax Highlighting - Light Theme) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
 
 <body class="h-screen flex flex-col text-zinc-900 overflow-hidden select-none">
@@ -22,7 +27,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          TITLEBAR
          ═══════════════════════════════════════════════════════════ -->
-    <header
+    <header id="app-titlebar"
         class="titlebar h-12 flex items-center justify-between px-6 bg-white border-b border-zinc-200 relative z-50">
         <div class="flex items-center gap-3">
             <div class="w-2.5 h-2.5 rounded-full bg-zinc-900"></div>
@@ -156,7 +161,7 @@
 
             <!-- Bento Grid -->
             <div class="grid grid-cols-12 grid-rows-6 gap-4 h-full">
-                <!-- Hero -->
+                <!-- Hero: Workspace Launcher -->
                 <div
                     class="col-span-12 md:col-span-7 row-span-4 rounded-3xl bg-white border border-zinc-200 p-8 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
                     <div>
@@ -164,16 +169,15 @@
                             Neural Workspace
                         </span>
                         <h1 class="mt-4 text-4xl md:text-5xl font-black tracking-tight text-zinc-900">
-                            Initializing<br>
-                            <span class="text-zinc-500">Codlyy AI Core</span>
+                            Ready to Code?<br>
+                            <span class="text-zinc-500">Pick a project.</span>
                         </h1>
                         <p class="mt-4 max-w-md text-sm leading-relaxed text-zinc-500">
-                            Secure environment booting. Synchronizing agents, models, and memory layers
-                            into a unified workspace.
+                            Secure environment ready. Access your local folders or cloud repositories.
                         </p>
                     </div>
                     <div class="flex gap-4 no-drag">
-                        <button
+                        <button id="btn-goto-workspace-select"
                             class="flex items-center gap-2 px-6 py-4 rounded-xl bg-zinc-900 text-white font-semibold text-sm hover:bg-zinc-800 transition-all active:scale-95 shadow-sm">
                             Open Workspace
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -259,6 +263,241 @@
                         <span class="px-3 py-1 rounded-full bg-zinc-100 text-xs font-semibold text-zinc-700">Code</span>
                         <span
                             class="px-3 py-1 rounded-full bg-zinc-100 text-xs font-semibold text-zinc-700">Reasoning</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ═══════════════════════════════════════════════════════════
+             VIEW: WORKSPACE SELECTION (Open/Clone/Recents)
+             ═══════════════════════════════════════════════════════════ -->
+        <div id="workspace-selection-view"
+            class="relative z-20 h-full max-w-6xl mx-auto px-6 py-8 hidden animate-in fade-in zoom-in-95 duration-500">
+
+            <div class="flex items-center gap-3 mb-8 cursor-pointer text-zinc-400 hover:text-zinc-600 transition-colors w-fit"
+                id="btn-back-to-dashboard">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m15 18-6-6 6-6" />
+                </svg>
+                <span class="text-sm font-semibold">Back to Dashboard</span>
+            </div>
+
+            <div class="flex h-[85%] gap-6">
+                <!-- Left Column: Actions -->
+                <div class="w-1/3 flex flex-col gap-4">
+                    <!-- Open Folder Card -->
+                    <button id="btn-open-folder"
+                        class="group relative overflow-hidden rounded-3xl bg-white border border-zinc-200 p-8 text-left shadow-sm hover:shadow-md transition-all active:scale-[0.98]">
+                        <div
+                            class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-500">
+                            <svg class="w-32 h-32 text-zinc-900" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z" />
+                            </svg>
+                        </div>
+                        <div class="relative z-10">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h2 class="text-xl font-bold text-zinc-900">Open Folder</h2>
+                            <p class="text-sm text-zinc-500 mt-1">Navigate to a local project directory.</p>
+                        </div>
+                    </button>
+
+                    <!-- Clone Repo Card -->
+                    <button
+                        class="group relative overflow-hidden rounded-3xl bg-white border border-zinc-200 p-8 text-left shadow-sm hover:shadow-md transition-all active:scale-[0.98]">
+                        <div
+                            class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-500">
+                            <svg class="w-32 h-32 text-zinc-900" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
+                            </svg>
+                        </div>
+                        <div class="relative z-10">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17-.6-.54-1.13-1.08-1.53C6.97 13.9 5.5 13.9 5.5 13.9c-.39-.02-.75.29-.8.68-.02.26.12.5.36.63.1.05.21.08.32.08.06 0 .5.01 1.09.83.65.88.94 2.22 1.63 2.66.45.29.98.42 1.51.38">
+                                    </path>
+                                    <line x1="16" y1="18" x2="22" y2="18"></line>
+                                    <line x1="19" y1="15" x2="19" y2="21"></line>
+                                </svg>
+                            </div>
+                            <h2 class="text-xl font-bold text-zinc-900">Clone Repo</h2>
+                            <p class="text-sm text-zinc-500 mt-1">Clone from GitHub URL.</p>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Right Column: Recents -->
+                <div class="flex-1 bg-white border border-zinc-200 rounded-3xl p-8 flex flex-col shadow-sm">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold text-zinc-900">Recent Workspaces</h2>
+                        <button class="text-xs font-semibold text-zinc-400 hover:text-zinc-600">Clear All</button>
+                    </div>
+
+                    <div id="recent-workspaces-list" class="flex-1 overflow-y-auto space-y-2 pr-2 custom-scrollbar">
+                        <!-- Items will be injected here -->
+                        <div class="text-center py-10 opacity-50">
+                            <p class="text-sm text-zinc-400">No recent workspaces</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             VIEW: WORKSPACE VIEWER (File Tree & Code)
+             ═══════════════════════════════════════════════════════════ -->
+        <div id="workspace-view" class="relative z-20 h-full flex hidden bg-white">
+
+            <!-- Sidebar: File Tree -->
+            <aside class="w-64 bg-zinc-50 border-r border-zinc-200 flex flex-col">
+                <div class="h-10 flex items-center px-4 border-b border-zinc-200 bg-zinc-100/50">
+                    <span class="text-xs font-bold text-zinc-500 uppercase tracking-wider">Explorer</span>
+                </div>
+                <div id="file-tree" class="flex-1 overflow-y-auto py-2 text-sm text-zinc-600 font-medium select-none">
+                    <!-- Tree items injected here -->
+                </div>
+            </aside>
+
+            <!-- Main: Code Editor Area -->
+            <div class="flex-1 flex flex-col min-w-0 bg-white">
+
+                <!-- Tab / Breadcrumb Header -->
+                <div
+                    class="h-12 flex items-center justify-between px-4 border-b border-zinc-200 bg-white shadow-sm z-10">
+
+                    <!-- Left: Sidebar Toggle & File Info -->
+                    <div class="flex items-center gap-3">
+                        <button id="btn-toggle-sidebar"
+                            class="p-1.5 rounded-md text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 transition-colors"
+                            title="Toggle Sidebar (Ctrl+B)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                                <line x1="9" x2="9" y1="3" y2="21" />
+                            </svg>
+                        </button>
+
+                        <div class="h-4 w-px bg-zinc-200 mx-1"></div>
+
+                        <div class="flex items-center gap-2 text-xs text-zinc-500 overflow-hidden">
+                            <span id="current-project-name"
+                                class="font-bold text-zinc-800 uppercase tracking-wider text-[10px] hidden md:block">NO
+                                FOLDER</span>
+                            <span class="text-zinc-300 hidden md:block">/</span>
+                            <span id="current-file-name" class="font-medium text-zinc-600 truncate max-w-[300px]">No
+                                file selected</span>
+                        </div>
+                    </div>
+
+                    <!-- Right: User Menu Trigger -->
+                    <div class="relative">
+                        <button id="btn-user-menu"
+                            class="flex items-center gap-2 p-1 pl-2 rounded-full hover:bg-zinc-50 border border-transparent hover:border-zinc-200 transition-all group">
+                            <div class="text-right hidden sm:block">
+                                <div id="header-user-name" class="text-[10px] font-bold text-zinc-700 leading-tight">
+                                    Codlyy User</div>
+                                <div class="text-[9px] text-zinc-400 font-mono">Online</div>
+                            </div>
+                            <img id="workspace-user-avatar" src=""
+                                class="w-8 h-8 rounded-full bg-zinc-200 object-cover ring-2 ring-white group-hover:ring-blue-50 transition-all">
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <div id="user-dropdown-menu"
+                            class="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl border border-zinc-200 py-1 hidden transform origin-top-right transition-all z-50">
+                            <div class="px-4 py-3 border-b border-zinc-100">
+                                <p class="text-xs font-bold text-zinc-900">Workspace Actions</p>
+                            </div>
+
+                            <!-- Close Workspace (Back to Selection) -->
+                            <button id="menu-close-workspace"
+                                class="w-full text-left px-4 py-2.5 text-xs font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 flex items-center gap-2.5 transition-colors">
+                                <svg class="w-4 h-4 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                                    <line x1="9" x2="9" y1="3" y2="21" />
+                                </svg>
+                                Close & Switch Project
+                            </button>
+
+                            <!-- Check Updates -->
+                            <button id="menu-check-updates"
+                                class="w-full text-left px-4 py-2.5 text-xs font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 flex items-center gap-2.5 transition-colors">
+                                <svg class="w-4 h-4 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
+                                    <path d="M21 3v5h-5" />
+                                </svg>
+                                Check for Updates
+                            </button>
+
+                            <div class="h-px bg-zinc-100 my-1"></div>
+
+                            <!-- Logout -->
+                            <button id="menu-logout"
+                                class="w-full text-left px-4 py-2.5 text-xs font-medium text-zinc-600 hover:bg-red-50 hover:text-red-500 flex items-center gap-2.5 transition-colors">
+                                <svg class="w-4 h-4 text-zinc-400 group-hover:text-red-500" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                    <polyline points="16 17 21 12 16 7" />
+                                    <line x1="21" y1="12" x2="9" y2="12" />
+                                </svg>
+                                Logout
+                            </button>
+
+                            <!-- Exit App -->
+                            <button id="menu-exit-app"
+                                class="w-full text-left px-4 py-2.5 text-xs font-bold text-red-600 hover:bg-red-50 flex items-center gap-2.5 transition-colors">
+                                <svg class="w-4 h-4 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+                                    <line x1="12" y1="2" x2="12" y2="12"></line>
+                                </svg>
+                                Exit Application
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Code Content -->
+                <div class="flex-1 relative overflow-hidden">
+                    <div id="code-viewer" class="absolute inset-0 overflow-auto flex text-sm font-mono leading-6">
+                        <!-- Line Numbers -->
+                        <div id="line-numbers"
+                            class="bg-zinc-50 border-r border-zinc-100 text-right pr-4 pl-2 py-4 select-none text-zinc-400 min-w-[3rem]">
+                        </div>
+                        <!-- Code -->
+                        <pre class="flex-1 py-6 px-8 tab-4 text-[13px] font-mono leading-7 min-w-0 overflow-visible"
+                            style="background: transparent;">
+                            <code id="file-content" class="language-javascript bg-transparent p-0 text-zinc-800"></code>
+                        </pre>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="empty-state"
+                        class="absolute inset-0 flex flex-col items-center justify-center text-zinc-300">
+                        <svg class="w-24 h-24 mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                            </path>
+                        </svg>
+                        <p class="text-sm font-medium">Select a file to view content</p>
                     </div>
                 </div>
             </div>
@@ -368,11 +607,15 @@
                 <div class="p-4 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100">
                     <div class="flex items-center gap-2 mb-2">
                         <span class="text-xs font-black text-blue-600 uppercase tracking-widest">New</span>
-                        <span class="text-[10px] font-mono text-blue-500">v1.0.7</span>
+                        <span class="text-[10px] font-mono text-blue-500">v1.0.10</span>
                     </div>
-                    <p class="text-sm font-bold text-zinc-900 mb-1">User Profiles & Smart Login</p>
-                    <p class="text-xs text-zinc-600 leading-relaxed">Added user profile card in dashboard, real data
-                        syncing from login, and instant smart view routing.</p>
+                    <p class="text-sm font-bold text-zinc-900 mb-1">Polished Workspace Experience</p>
+                    <p class="text-xs text-zinc-600 leading-relaxed">
+                        • <b>Focus Mode:</b> Auto-hides titlebar for code immersion.<br>
+                        • <b>Sidebar Toggle:</b> Use Ctrl+B or the header button.<br>
+                        • <b>Action Menu:</b> Separate controls for switching projects, logging out, and exiting.<br>
+                        • <b>Project Name:</b> Clearer visibility of active folder.
+                    </p>
                 </div>
             </div>
 
